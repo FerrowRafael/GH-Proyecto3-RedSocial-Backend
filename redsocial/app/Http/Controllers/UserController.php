@@ -25,7 +25,6 @@ class UserController extends Controller
                 'message' => 'Wrong Credentials'
             ], 400); //res.status(400).send({'message' : 'Wrong Credentials'})
         }
-        return ($request->user());
         $user = $request->user(); //req.user tb podemos utilizar $request->user()
         $token = $user->createToken('token')->accessToken;
         return response([
@@ -50,11 +49,12 @@ class UserController extends Controller
     }
 
      // GET ALL
-     public function getAll()
-     { //with es como include o populate()
+    public function getAll()
+    { //with es como include o populate()
          $posts = User::with('post')->get();
          return $users;
-     }
+    }
+
     public function show(Request $request,$id)
     {
         $curso = User::find($id);

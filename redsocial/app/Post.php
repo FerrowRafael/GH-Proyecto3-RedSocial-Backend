@@ -10,6 +10,7 @@ class Post extends Model
         'text',
         'image_path',
         'user_id',
+        'category_id'
     ];
     public function user()
     {
@@ -17,6 +18,6 @@ class Post extends Model
     }
     public function categories()
     {
-        return $this->belongsToMany('\App\Category');
+        return $this->hasMany('\App\Category');
     }
 }

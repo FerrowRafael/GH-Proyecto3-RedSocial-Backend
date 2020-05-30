@@ -31,7 +31,7 @@ Route::prefix('v1')->group(function () {
     Route::group([
         'prefix'=>'categories',
         'middleware'=>'auth:api'
-    ],function(){
+    ], function(){
         Route::get('','CategoryController@getAll');             // 1
         Route::post('','CategoryController@insert');            // 2
         Route::put('{id}','CategoryController@update');         // 3
