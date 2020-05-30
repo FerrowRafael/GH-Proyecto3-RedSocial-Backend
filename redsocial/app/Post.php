@@ -8,15 +8,15 @@ class Post extends Model
 {
     protected $fillable=[
         'text',
-        'file',
+        'image_path',
         'user_id',
     ];
     public function user()
     {
        return $this->belongsTo('\App\User');
     }
-    // public function post()
-    // {
-    //     return $this->belongsToMany('\App\Post');
-    //  }
+    public function categories()
+    {
+        return $this->belongsToMany('\App\Category');
+    }
 }

@@ -54,4 +54,8 @@ class User extends Authenticatable
     // {
     //     return $this->hasMany('\App\Comments');
     // }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

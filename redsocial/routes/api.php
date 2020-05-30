@@ -6,12 +6,14 @@ Route::prefix('v1')->group(function () {
 
     // USERS
     Route::prefix('users')->group(function () {
-        Route::post('/register', 'UserController@register');
-        Route::post('/login', 'UserController@login');
+        Route::post('/register', 'UserController@register');    // 1
+        Route::post('/login', 'UserController@login');          // 2
+        Route::get('/id/{id}', 'UserController@show');
+        Route::get('/info', 'UserController@getAll');          // 3
 
-        Route::middleware('auth:api')->group(function () {
-            Route::get('/logout', 'UserController@logout'); //** */
-            Route::get('/info', 'UserController@getUserInfo');
+        Route::middleware('auth:api')->group(function () {      
+            Route::get('/logout', 'UserController@logout');     // 4 *
+            // Route::get('/info', 'UserController@getUserInfo');  // 5
         });
     });
     
@@ -20,11 +22,20 @@ Route::prefix('v1')->group(function () {
         'prefix' => 'posts',
         'middleware' => 'auth:api'
     ], function () {
-        Route::get('/', 'PostsController@getAll');
-        Route::get('/{id}', 'PostsController@getById');
-        Route::post('/', 'PostsController@insert');
+        Route::get('/', 'PostController@getAll');               // 1
+        Route::get('/{id}', 'PostController@getById');          // 2
+        Route::post('/', 'PostController@insert');              // 3
+        Route::put('/{id}', 'PostController@update');           // 4
+        Route::delete('/{id}', 'PostController@destroy');       // 5
     });
-
+    Route::group([
+        'prefix'=>'categories',
+        'middleware'=>'auth:api'
+    ],function(){
+        Route::get('','CategoryController@getAll');             // 1
+        Route::post('','CategoryController@insert');            // 2
+        Route::put('{id}','CategoryController@update');         // 3
+    });
     // LIKES
     // Route::group([
     //     'prefix' => 'categories',
