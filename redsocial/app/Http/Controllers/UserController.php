@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    // 1 REGISTER
     public function register(Request $request)
     {
         $body = $request->all();
@@ -17,6 +18,8 @@ class UserController extends Controller
         $user = User::create($body);
         return response($user, 201);
     }
+
+    // 2 LOGIN
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -26,12 +29,14 @@ class UserController extends Controller
             ], 400); //res.status(400).send({'message' : 'Wrong Credentials'})
         }
         $user = $request->user(); //req.user tb podemos utilizar $request->user()
-        $token = $user->createToken('token')->accessToken;
+        $token = $user->createToken('authToken')->accessToken;
         return response([
             'user' => $user,
             'token' => $token
         ]);
     }
+
+    // 3 LOGOUT
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
@@ -40,24 +45,18 @@ class UserController extends Controller
             'mensaje' => 'User successfully logged out'
         ]);
     }
-    public function getUserInfo(Request $request)
-    {
-       
-        $user = Auth::user(); //req.user
-        $request->user();
-        return response($user);
-    }
 
-     // GET ALL
-    public function getAll()
+    // 4 GET USERS ALL
+    public function getUsersAll()
     { //with es como include o populate()
-         $posts = User::with('post')->get();
-         return $users;
+         $user = User::all();
+         return $user;
     }
 
-    public function show(Request $request,$id)
+    // 5 GET USERS BY ID
+    public function getUserById(Request $request,$id)
     {
-        $curso = User::find($id);
-        return $curso;
+        $user = User::find($id);
+        return $user;
     }
 }

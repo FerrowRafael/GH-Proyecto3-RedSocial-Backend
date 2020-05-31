@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    // GET CATEGORIES ALL
     public function getAll()
     {
         try {
-            $categories = Category::with('products')->get();
+            $categories = Category::select(['id', 'name'])->get();
             return $categories;
         } catch (\Exception $e) {
             return response([
@@ -19,6 +20,7 @@ class CategoryController extends Controller
         }
     }
     
+    // INSERT CATEGORY
     public function insert(Request $request)
     {
         try {
@@ -35,6 +37,8 @@ class CategoryController extends Controller
             ], 500);
         }
     }
+
+    // UPDATE CATEGORY
     public function update(Request $request, $id)
     {
         try {
@@ -55,20 +59,22 @@ class CategoryController extends Controller
             ], 500);
         }
     }
-    public function delete(Request $request, $id)
+
+    // DELETE CATEGORY
+    public function destroy(Request $request, $id)
     {
         try {
             $category = Category::find($id);
-            $category->products()->detach();
+            // $category->products()->detach();
             $category->delete();
             return response([
                 'category' => $category,
-                'message' => 'Category succesfully updated',
+                'message' => 'Category succesfully deleted',
             ]);
         } catch (\Exception $e) {
             return response([
                 'error' => $e->getMessage(),
-                'message' => 'There was a problem trying to update the category',
+                'message' => 'There was a problem trying to delete the category',
             ], 500);
         }
     }

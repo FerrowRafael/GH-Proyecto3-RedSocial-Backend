@@ -46,16 +46,16 @@ class User extends Authenticatable
     {
        return $this->hasMany('\App\Post');
     }
-    // public function likes()
-    // {
-    //     return $this->hasMany('\App\Likes');
-    // }
-    // public function comments()
-    // {
-    //     return $this->hasMany('\App\Comments');
-    // }
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
+    public function likes()
+    {
+        return $this->belongsToMany('App\Posts', 'likes');
+    }
+    // public function comments()
+    // {
+    //     return $this->hasMany('\App\Comments');
+    // }
 }

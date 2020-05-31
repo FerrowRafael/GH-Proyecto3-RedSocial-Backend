@@ -16,14 +16,14 @@ class PostController extends Controller
     // GET ALL
     public function getAll()
     { //with es como include o populate()
-        $posts = Post::with('user')->get();
+        $posts = Post::with('user', 'category')->get();
         return $posts;
     }
 
     // GET BY ID
     public function getById(Request $request, $id)
     { //with es como include o populate()
-        $posts = Post::find($id)::with('user')->get();
+        $posts = Post::find($id)::with('user', 'category')->get();
         return $posts;
     }
  
@@ -81,9 +81,8 @@ class PostController extends Controller
     // }
     // }
 
-    public function insert(Request $request)
-    {
-        
+    // INSERT POST
+    public function insert(Request $request){ 
         $body = $request->all();//req.body
         
         // dump($body);//dump() y dd() son de laravel, var_dump() de php, dd() corta el flujo
@@ -92,28 +91,18 @@ class PostController extends Controller
         $post = Post::create($body);
         return response($post, 201);
     }
+
     // UPDATE
-    public function update(Request $request, $id)
-    {
-        // $request->validate([
-        //     'id' => 'required',
-        // ]);
+    public function update(Request $request, $id){
         $post = Post::find($id);
         $post->update($request->all());
         return $post;
-        // return redirect()->route('post.index')
-        //                 ->with('success','Post updated successfully');
     }
 
     // DESTROY
-    public function destroy( $id)
-    {
+    public function destroy($id){
         $post = Post::find($id);
-        // if($user && ($comment->user_id == $user->id || $comment->image->user_id == $user->id)){
-        // 	$comment->delete();
-
         if (Auth::id() !== $post->user_id){
-            
             return response([
                 'message' => 'Wrong Credentials'
             ], 400);
@@ -122,8 +111,6 @@ class PostController extends Controller
         return response([
             'message' => 'Borrado correctamente'
         ], 200);
-        // return redirect()->route('post.index')
-        //                 ->with('success','Post deleted successfully');
     }
 
 }

@@ -16,8 +16,12 @@ class Post extends Model
     {
        return $this->belongsTo('\App\User');
     }
-    public function categories()
+    public function category()
     {
-        return $this->hasMany('\App\Category');
+        return $this->belongsTo('\App\Category');
+    }
+    public function likes()
+    {
+        return $this->belongsToMany('App\Users', 'likes');
     }
 }
