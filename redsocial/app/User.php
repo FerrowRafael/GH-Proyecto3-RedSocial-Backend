@@ -52,10 +52,10 @@ class User extends Authenticatable
     }
     public function likes()
     {
-        return $this->belongsToMany('App\Posts', 'likes');
+        return $this->belongsToMany('App\Post', 'likes');
     }
-    // public function comments()
-    // {
-    //     return $this->hasMany('\App\Comments');
-    // }
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
 }

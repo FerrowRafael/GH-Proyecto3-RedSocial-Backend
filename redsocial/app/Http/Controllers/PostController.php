@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Category;
+use App\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,20 +14,21 @@ use Illuminate\Database\Eloquent\Collection;
 
 class PostController extends Controller
 {
-    // GET ALL
+
+    // GET POSTS ALL 
     public function getAll()
     { //with es como include o populate()
-        $posts = Post::with('user', 'category')->get();
-        return $posts;
+        $posts = Post::with('user', 'category', 'comment.user', 'like.user')->get();
+        return $posts;;
     }
 
-    // GET BY ID
+    // GET POST BY ID
     public function getById(Request $request, $id)
     { //with es como include o populate()
-        $posts = Post::find($id)::with('user', 'category')->get();
+        $posts = Post::find($id)::with('category','comment.user', 'likes')->get();
         return $posts;
     }
- 
+                                                                                                            
     // // INSERT
     // public function insert(Request $request)
     // {
@@ -112,5 +114,25 @@ class PostController extends Controller
             'message' => 'Borrado correctamente'
         ], 200);
     }
+
+
+    // SUBIR IMAGEN
+    // public function uploadImage(Request $request, $id)
+    // {
+    //     try {
+    //         $request->validate(['img' => 'required|image']);
+    //         // $request->validate(['imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048']);
+    //         $user = User::find($id);//buscamos el producto a actualizar la ruta de la imagen
+    //         $imageName = time() . '-' . request()->img->getClientOriginalName();//time() es como Date.now()
+    //         request()->img->move('images/profile', $imageName);//mueve el archivo subido al directorio indicado (en este caso public path es dentro de la carpeta public)
+    //         $user->update(['image_path' => $imageName]);//actualizamos el image_path con el nuevo nombre de la imagen
+    //         return response($user);
+    //     } catch (\Exception $e) {
+    //         return response([
+    //             'error' => $e,
+    //         ], 500);
+    //     }
+    // }
+
 
 }

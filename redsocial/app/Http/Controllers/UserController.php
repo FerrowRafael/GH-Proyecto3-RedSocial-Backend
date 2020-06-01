@@ -50,7 +50,7 @@ class UserController extends Controller
     public function getUsersAll()
     { //with es como include o populate()
          $user = User::all();
-         return $user;
+         return $user->load('likes');
     }
 
     // 5 GET USERS BY ID
