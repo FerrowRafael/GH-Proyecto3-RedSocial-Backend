@@ -28,16 +28,17 @@ class CommentController extends Controller
     //     }
     // }
 
-    public function insertComment(Request $request, $id)
-    {
+    public function insertComment(Request $request, $id){
+
         try {
-            $body = $request->validate([
-                'text' => 'required|string',
-            ]);
+            // $body = $request->validate([
+            //     'text' => 'required|string',
+            // ]);
             $body['post_id'] = $id;
             $body['user_id'] = Auth::id();
-            $body = User::select(['id', 'nickname']);  
-            $comment = $body::insert(Comment::create($body));
+            $body['text'] = $request->text;
+            // $body = User::select(['id', 'nickname']);  
+            $comment = Comment::create($body);
             return $comment;
         } catch (\Exception $e) {
             return response([

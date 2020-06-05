@@ -50,13 +50,13 @@ class PostController extends Controller
     // }
 
     // INSERT POST
-    public function insert(Request $request){ 
-        $body = $request->all();
-        $body['user_id'] = Auth::id();
+    // public function insert(Request $request){ 
+    //     $body = $request->all();
+    //     $body['user_id'] = Auth::id();
         
-        $post = Post::create($body);
-        return response($post, 201);
-    }
+    //     $post = Post::create($body);
+    //     return response($post, 201);
+    // }
 
     // UPDATE
     public function update(Request $request, $id){
@@ -151,5 +151,25 @@ class PostController extends Controller
     {           
         $filter = Post::orderBy('id', 'DESC')->get();                                      
         return $filter;
+    }
+
+    public function insert(Request $request)
+    {
+        try {
+            $body = $request->validate([
+                'title' => 'required|string',
+                'text' => 'required|string',
+                'image_path' => 'required|image',
+                'category_id'=>'required'
+            ]);
+            $imageName = time() . '-' . request()->image_path->getClientOriginalName(); //time() es como Date.now()
+            request()->image_path->move('images/posts', $imageName); //mueve el archivo subido al directorio indicado (en este caso public path es dentro de la carpeta public)
+            $body['image_path'] = $imageName;
+            $body['user_id'] = Auth::id();
+            $product = Post::create($body);
+        } catch (\Exception $e) {
+            return response($e,500);
+        }
+        return response($product, 201);
     }
 }
