@@ -32,11 +32,12 @@ class CommentController extends Controller
     {
         try {
             $body = $request->validate([
-                'text' => 'required|string'
+                'text' => 'required|string',
             ]);
             $body['post_id'] = $id;
             $body['user_id'] = Auth::id();
-            $comment = Comment::create($body);
+            $body = User::select(['id', 'nickname']);  
+            $comment = $body::insert(Comment::create($body));
             return $comment;
         } catch (\Exception $e) {
             return response([
@@ -60,7 +61,9 @@ class CommentController extends Controller
     // GET POST BY ID
     public function getCommentById(Request $request, $id)
     { //with es como include o populate()
-        $posts = Comment::find($id)::with('user')->get();
+        $posts = Comment::find($id)
+        ->where('post_id', $id)
+        ->with('user')->get();
         return $posts;
     }
 
