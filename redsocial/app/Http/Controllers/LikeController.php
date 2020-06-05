@@ -25,8 +25,9 @@ class LikeController extends Controller
     }
 
     // DISLIKE
-    public function dislike($id){
-        $like = Like::find($id)::where('post_id',$id);
+    public function dislike($id){   
+        $like = Like::find($id);
+        dd($like->user_id);
         if (Auth::id() !== $like->user_id){
             return response([
                 'message' => 'Wrong Credentials'

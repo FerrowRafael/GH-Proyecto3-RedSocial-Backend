@@ -18,51 +18,17 @@ class PostController extends Controller
     // GET POSTS ALL 
     public function getAll()
     { //with es como include o populate()
-        $posts = Post::with('user', 'category', 'comment.user', 'like.user')->get();
+        $posts = Post::with('user', 'category', 'comment.user', 'likes')->get();
         return $posts;;
     }
 
     // GET POST BY ID
-    public function getById(Request $request, $id)
+    public function getById($id)
     { //with es como include o populate()
-        $posts = Post::find($id)::with('category','comment.user', 'likes')->get();
-        return $posts;
+        $post = Post::with('category')->find($id);
+        return $post;
     }
-                                                                                                            
-    // // INSERT
-    // public function insert(Request $request)
-    // {
-    //     try {
-    //         $categoriesIds = Category::all()->map(function($category) {return $category->id->toArray();}) ;
-    //         // $categoriesMapped=$categoriesFiltered->map(fn ($category) =>[
-    //         //     'id'=>$category->id,
-    //         //     'name'=>$category->name
-    //         //     ])->values()->toArray();
-    //         // dd($categoriesMapped);
-    //         // $numbers =new Collection([[1,2],[[3,4],5,6]]) ;
-    //         // dd($numbers->flatten()->sum());
-    //         // dump($categoriesIds);
-    //         // dump(join(',',$categoriesIds));//transforma arrays en strings definiendo un separador lo mismo join que implode
-    //         $body = $request->validate([
-    //             'text' => 'required|string|max:40',
-    //             'image_path' => 'string',
-    //             'categories' => 'required|array|in:' . implode(',', $categoriesIds)
-    //         ]);
-    //         $body['user_id'] = Auth::id();
-    //         $post = Post::create($body);
-    //         //const product = await Product.create(req.body)
-    //         $post->categories()->attach($body['categories']);
-    //         // product.addCategory(req.body.categories)
-    //         // $product->categories()->create($body['categories']);
-    //         // product.createCategory(req.body.categories)
-    //         return response($product->load('categories'), 201);
-    //     } catch (\Exception $e) {
-    //         return response([
-    //             'error' => $e
-    //         ], 500);
-    //     }
-    // }
-
+                                                                                            
 
     //** Ejemplo muxos a mxos Order Sofy */
     // public function insert(Request $request)
@@ -133,6 +99,18 @@ class PostController extends Controller
     //         ], 500);
     //     }
     // }
+    
+    // GET POST BY TITLE
+    public function getPostByTitle($title)
+    {                                                 
+        $filter = Post::where('title','LIKE','%'.$title.'%')->get();
+        return $filter;
+    }
 
-
+    // ORDER POST DESC
+    public function orderPostDesc()
+    {           
+        $filter = Post::orderBy('id', 'DESC')->get();                                      
+        return $filter;
+    }
 }

@@ -45,11 +45,11 @@ class CommentController extends Controller
         }
     }
     // GET COMMENTS ALL
-    public function getAll()
+    public function getCommentsAll()
     {
         try {
-            $categories = Category::select(['id', 'name'])->get();
-            return $categories;
+            $comments = Comment::select(['id', 'text'])->get();
+            return $comments;
         } catch (\Exception $e) {
             return response([
                 'error' => $e
@@ -60,9 +60,10 @@ class CommentController extends Controller
     // GET POST BY ID
     public function getCommentById(Request $request, $id)
     { //with es como include o populate()
-        $posts = Post::find($id)::with('user')->get();
+        $posts = Comment::find($id)::with('user')->get();
         return $posts;
     }
+
     // UPDATE COMMENT
     public function update(Request $request, $id)
     {
@@ -103,4 +104,12 @@ class CommentController extends Controller
             ], 500);
         }
     }
+
+    // GET COMMENT BY POST ID
+    public function getCommentByPostId($id)
+    { //with es como include o populate()
+        $posts = Comment::where('post_id', $id)->select(['id','user_id', 'text'])->with('user')->get();
+        return $posts;
+    }
+    
 }
