@@ -38,15 +38,30 @@ class UserController extends Controller
     }
 
     // 3 LOGOUT
-    public function logout(Request $request)
-    {
-        $request->user()->token()->revoke();
-        // DB::table('oauth_access_tokens')->where('revoked',1)->delete();
-        return response([
-            'mensaje' => 'User successfully logged out'
-        ]);
+    // public function logout(Request $request)
+    // {
+    //     dd($request);
+    //     $request->user()->token()->revoke();
+    //     // DB::table('oauth_access_tokens')->where('revoked',1)->delete();
+    //     return response([
+    //         'mensaje' => 'Usuario deslogeado correctamente'
+    //     ]);
+    // }
+    public function logout(){
+        try {
+            dd(Auth::id());
+            Auth::user()->token()->revoke();
+            return response([
+                'message' => 'Usuario desconectado correctamente'
+            ]);
+        } catch (\Exception $e) {
+            return response([
+                'message' => 'Ha habido un error al tratar de desconectar.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+        
     }
-
     // 4 GET USERS ALL
     public function getUsersAll()
     { //with es como include o populate()

@@ -9,9 +9,9 @@ Route::prefix('v1')->group(function () {
         Route::post('/login', 'UserController@login');          // 2
         Route::get('/all', 'UserController@getUsersAll');       // 4 
         Route::get('/{id}', 'UserController@getUserById');      // 5        
-
+        Route::get('/logout', 'UserController@logout');     // 3 *
         Route::middleware('auth:api')->group(function () {      
-            Route::get('/logout', 'UserController@logout');     // 3 *
+            // Route::get('/logout', 'UserController@logout');     // 3 *
         });
     });
     
@@ -46,7 +46,7 @@ Route::prefix('v1')->group(function () {
     Route::prefix('likes')->group(function () {
         Route::middleware('auth:api')->group(function () {      
             Route::post('/', 'LikeController@insertLike');          // 1
-            Route::get('/{id}','LikeController@dislike');        // 2
+            Route::delete('/{id}','LikeController@dislike');        // 2
             // Route::get('/','LikeController@getLikesAll');
             Route::get('/post/{id}', 'LikeController@getLikeByPostId');
         });
