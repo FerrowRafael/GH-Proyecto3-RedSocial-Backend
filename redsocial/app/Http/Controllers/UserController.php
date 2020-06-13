@@ -75,4 +75,13 @@ class UserController extends Controller
         $user = User::find($id);
         return $user;
     }
+
+    // 5 GET USERS BY ID
+    public function userUpdate(Request $request)
+    {
+        $id = Auth::id();
+        $user = User::where('id', $id)->firstOrFail();
+        $user->update($request->all());
+        return $user;
+    }
 }

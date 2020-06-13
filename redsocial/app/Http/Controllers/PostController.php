@@ -6,6 +6,7 @@ use App\Post;
 use App\Category;
 use App\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -16,16 +17,15 @@ class PostController extends Controller
 {
 
     // GET POSTS ALL 
-    public function getAll()
-    { //with es como include o populate()
+    public function getAll(){ 
         $posts = Post::with('user', 'category', 'comment.user', 'likes')->get();
         return $posts;;
     }
 
     // GET POST BY ID
-    public function getById($id)
-    { //with es como include o populate()
-        $post = Post::with('category')->find($id);
+    public function getById($id){ 
+
+        $post = Post::with('user', 'category', 'comment.user', 'likes')->find($id);
         return $post;
     }
                                                                                             
@@ -140,21 +140,18 @@ class PostController extends Controller
     // }
     
     // GET POST BY TITLE
-    public function getPostByTitle($title)
-    {                                                 
+    public function getPostByTitle($title){                                                 
         $filter = Post::where('title','LIKE','%'.$title.'%')->get();
         return $filter;
     }
 
     // ORDER POST DESC
-    public function orderPostDesc()
-    {           
+    public function orderPostDesc(){           
         $filter = Post::orderBy('id', 'DESC')->get();                                      
         return $filter;
     }
 
-    public function insert(Request $request)
-    {
+    public function insert(Request $request){
         try {
             $body = $request->validate([
                 'title' => 'required|string',
