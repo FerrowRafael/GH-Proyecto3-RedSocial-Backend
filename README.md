@@ -224,7 +224,6 @@ class CreatePostsTable extends Migration
         Schema::dropIfExists('posts');
     }
 }
-
 ```
 
 
@@ -238,6 +237,21 @@ Las rutas al utilizar Laravel como API usamos la parte de api.php
 - Post
 - User
 
+```js
+    // POSTS
+    Route::prefix('posts')->group(function () {
+        Route::middleware('auth:api')->group(function () {      
+            Route::get('/', 'PostController@getAll');               // 1
+            Route::get('/id/{id}', 'PostController@getById');       // 2 Añadidos comentarios
+            Route::post('/', 'PostController@insert');              // 3
+            Route::put('/{id}', 'PostController@update');           // 4
+            Route::delete('/{id}', 'PostController@destroy');       // 5
+            Route::get('/search/{title}', 'PostController@getPostByTitle');  
+            Route::get('/orderDes', 'PostController@orderPostDesc'); 
+        });
+    
+    });
+```
 
 ## Documentation 📚 
 
@@ -253,5 +267,5 @@ Las rutas al utilizar Laravel como API usamos la parte de api.php
 ## Base de datos 
 
 Inicio
-<a href="https://github.com/FerrowRafael/GH-Proyecto2-RedSocial-Frontend"><img src="./public/images/DB.jpg" alt="Inicio"></a>
+<a href="https://github.com/FerrowRafael/GH-Proyecto2-RedSocial-Frontend"><img src="./redsocial/public/images/DB.jpg" alt="Inicio"></a>
 
