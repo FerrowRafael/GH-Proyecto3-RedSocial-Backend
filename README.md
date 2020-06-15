@@ -267,5 +267,5 @@ Las rutas al utilizar Laravel como API usamos la parte de api.php
 ## Base de datos 
 
 Inicio
-<a href="https://github.com/FerrowRafael/GH-Proyecto2-RedSocial-Frontend"><img src="./redsocial/public/images/DB.jpg" alt="Inicio"></a>
+<a href="https://github.com/FerrowRafael/GH-Proyecto2-RedSocial-Frontend"><img src="./GH-Proyecto2-RedSocial-Backend/redsocial/public/images/DB.jpg" alt="Inicio"></a>
 
