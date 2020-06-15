@@ -106,11 +106,11 @@ npm start
 
 Mis controllers son: 
 
-#### Category
-#### Comment
-#### Likes
-#### Post
-#### User
+- Category
+- Comment
+- Likes
+- Post
+- User
 
 Ejemplo: PostController.php
 ```js
@@ -137,11 +137,11 @@ public function insert(Request $request){
 
 ### Models
 
-#### Category
-#### Comment
-#### Likes
-#### Post
-#### User
+- Category
+- Comment
+- Likes
+- Post
+- User
 
 Ejemplo: PostController.php
 ```js
@@ -181,12 +181,11 @@ class Post extends Model
 
 ### Migrations
 
-
-#### Category
-#### Comment
-#### Likes
-#### Post
-#### User
+- Category
+- Comment
+- Likes
+- Post
+- User
 
 ```js
 <?php
@@ -233,11 +232,11 @@ class CreatePostsTable extends Migration
 
 Las rutas al utilizar Laravel como API usamos la parte de api.php
 
-#### Category
-#### Comment
-#### Likes
-#### Post
-#### User
+- Category
+- Comment
+- Likes
+- Post
+- User
 
 
 ## Documentation 📚 
