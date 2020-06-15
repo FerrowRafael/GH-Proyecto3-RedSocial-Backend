@@ -58,14 +58,23 @@ class PostController extends Controller
     //     return response($post, 201);
     // }
 
-    // UPDATE
+    // UPDATE POST
     public function update(Request $request, $id){
         $post = Post::find($id);
-        $post->update($request->all());
-        return $post;
+        if (Auth::id() !== $post->user_id){
+            $post->update($request->all());
+            return response([
+                'message' => 'Wrong Credentials'
+            ], 400,);
+            return $post;
+        }
+
+        return response([
+            'message' => 'Post modificado correctamente'
+        ], 200);
     }
 
-    // DESTROY
+    // DELETE POST
     public function destroy($id){
         $post = Post::find($id);
         if (Auth::id() !== $post->user_id){
@@ -73,7 +82,7 @@ class PostController extends Controller
                 'message' => 'Wrong Credentials'
             ], 400);
         }
-        $post->delete();
+        // $post->delete();
         return response([
             'message' => 'Borrado correctamente'
         ], 200);
