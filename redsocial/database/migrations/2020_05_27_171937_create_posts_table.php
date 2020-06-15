@@ -15,13 +15,15 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('text');
-            $table->string('file');
-            $table->string('user_id');
+            $table->string('title');
+            $table->text('text');
+            $table->string('image_path')->nullable();
+            $table->integer('user_id');
+            $table->integer('category_id');
             $table->timestamps();
         });
     }
-
+                                                            
     /**
      * Reverse the migrations.
      *

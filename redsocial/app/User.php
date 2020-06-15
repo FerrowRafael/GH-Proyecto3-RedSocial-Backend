@@ -17,10 +17,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-
+        'name',
+        'surname',
         'nickname',
         'email', 
         'password',
+        'image_path'
 
     ];
 
@@ -46,12 +48,34 @@ class User extends Authenticatable
     {
        return $this->hasMany('\App\Post');
     }
-    // public function likes()
-    // {
-    //     return $this->hasMany('\App\Likes');
-    // }
-    // public function comments()
-    // {
-    //     return $this->hasMany('\App\Comments');
-    // }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+    public function likes()
+    {
+        return $this->belongsToMany('App\Post', 'likes');
+    }
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
+    public function followers()
+    {
+        return $this->belongsToMany(
+            self::class,
+            'followers',
+            'follower_id',
+            'followed_id',
+        );
+    }
+    public function following()
+    {
+        return $this->belongsToMany(
+            self::class,
+            'followers',
+            'followed_id',
+            'follower_id',
+        );
+    }
 }
