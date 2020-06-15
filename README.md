@@ -1,6 +1,6 @@
 # GH-Proyecto3-RedSocial-Backend 
 
-FrontEnd del tercer proyecto del Bootcamp FullStack de GeeksHubs de una ecommerce de camisetas.
+BackEnd del tercer proyecto del Bootcamp FullStack de GeeksHubs de una Red Social clone de Pinterest
 React(Redux) / PHP(Laravel)
 
 ## Table of Content
